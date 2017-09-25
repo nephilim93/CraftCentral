@@ -7,3 +7,7 @@ sites/*/private
 
 # Ignore Mac DS_Store files
 .DS_Store
+
+# Directories
+node_modules/
+sites/all/themes/craftcentral/node_modules/
