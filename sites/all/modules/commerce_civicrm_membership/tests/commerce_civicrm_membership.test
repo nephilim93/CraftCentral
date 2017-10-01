@@ -1,0 +1,32 @@
+<?php
+
+/*
+ * Tests for the commerce_civicrm_membership module
+ */
+
+class CommerceCivicrmMembershipTests extends DrupalWebTestCase{
+	
+	public static function getInfo(){
+		return array(
+			'name' => 'Commerce CiviCRM Membership',
+			'description' => 'Tests for the Commerce CiviCRM Membership module.',
+			'group' => 'Commerce CiviCRM Membership Group'
+		);
+	}
+
+	public function setUp(){
+		parent::setUp(array(
+			'civicrm',
+			'commerce',
+			'commerce_product',
+			'commerce_civicrm',
+			'comerce_civicrm_membership',
+		));
+
+	}
+
+	public function testCommerceCivicrmMembershipTests(){
+		
+	}
+
+}

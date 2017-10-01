@@ -1,0 +1,10 @@
+name = Commerce Civicrm Membership
+description = Allows purchasing memberships through Drupal Commerce products
+package = Commerce (contrib)
+dependencies[] = commerce
+dependencies[] = commerce_product
+dependencies[] = commerce_civicrm
+dependencies[] = civicrm
+core = 7.x
+
+files[] = tests/commerce_civicrm_membership.test

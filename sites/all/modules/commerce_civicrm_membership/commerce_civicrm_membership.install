@@ -1,0 +1,35 @@
+<?php
+
+/*
+ * Implements hook schema
+ */
+
+function commerce_civicrm_membership_schema(){
+
+	$schema['commerce_civicrm_membership'] = array(
+		'description' => 'Commerce product and CiviCRM Membership Relationships.',
+		'fields' => array(
+			'pid' => array(
+				'description' => 'The primary identifier for a product, used internally only.',
+				'type' => 'serial',
+				'unsigned' => TRUE,
+				'not null' => TRUE,
+			),
+			'product_id' => array(
+				'description' => 'The commerce product id.',
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => FALSE,
+			),
+			'membership_id' => array(
+				'description' => 'The CiviCRM membership id.',
+				'type' => 'int',
+				'unsigned' => TRUE,
+				'not null' => FALSE,
+			),
+		),
+		'primary key' => array('pid'),
+	);
+
+	return $schema;
+}

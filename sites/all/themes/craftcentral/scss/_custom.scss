@@ -1,0 +1,253 @@
+html{
+	body{
+		background: #FFFFFF;
+		color: #454a5b;
+		a{
+			text-decoration: none;
+		}
+
+		header.navbar{
+			margin: 0px;
+			background: #FFFFFF;
+			border: 0px;
+
+			.navbar-header{
+				float: none;
+
+				a.logo{
+					padding: 0px;
+					margin: 0px;
+				}
+
+				button.navbar-toggle{
+					margin: 50px 30px 0px 0px;
+					border: none;
+					background: transparent;
+					color: #ed1c8b;
+					font-size: 2em;
+					padding: 0px;
+				}
+				.user_menu{
+					margin: 50px 30px 0px 0px;
+
+					a{
+						font-size: 2em;
+						color: #454a5b;
+					}
+				}
+				.search_form_container{
+					margin: 50px 0px 0px 0px;
+
+					button{
+						background: #454a5b;
+						border-color: #454a5b;
+					}
+				}
+				.breadcrumb-container{
+					margin: 30px 0px 0px 0px;
+
+					ol{
+						background: transparent;
+						padding: 0px;
+						margin: 0px;
+					}
+				}
+			}
+		}
+
+		.main-container{
+			.title-container{
+				background: #ed1c8b;
+				padding: 30px 0px;
+
+				h1{
+					margin: 0px;
+					border: 0px;
+					color: #FFFFFF;
+					padding: 0px;
+					font-weight: normal;
+				}
+			}
+		}
+
+		.region-content{
+			.view-id-civi_designer_profile{
+				h3{
+					margin: 0px 0px 15px 0px;
+				}
+				.top_details{
+					margin: 0px 0px 30px 0px;
+					p, span{
+						display: inline-block;
+						margin: 0px 20px 0px 0px;
+					}
+					span{
+						color: #dadadc;
+					}
+				}
+				.bottom_details{
+					padding: 0px 0px 20px 0px;
+				}
+				.dm-profile-image{
+					img{
+						border-radius: 50%;
+					}
+				}
+				.dm-profile-links{
+					a{
+						color: #00bff3;
+						text-decoration: none;
+						margin: 0px 0px 15px 0px;
+						display: block;
+					}
+					ul{
+						padding: 0px;
+						margin: 0px;
+						li{
+							list-style: none;
+							list-style-type: none;
+							list-style-image: none;
+
+							a{
+								width: 30px;
+								height: 30px;
+								background: #454a5b;
+								float: left;
+								line-height: 30px;
+								text-align: center;
+								color: #FFFFFF;
+								margin: 0px 5px 0px 0px;
+							}
+						}
+					}
+				}
+				.attachment{
+					background: #dadadc;
+
+					.gallery{
+						padding: 0px 0px 30px 0px;
+						.slick-prev,
+						.slick-next{
+							border: 0px;
+							background: transparent;
+							position: absolute;
+							top: 40%;
+							color: #FFFFFF;
+							z-index: 3000;
+							font-size: 3em;
+						}
+						.slick-prev{
+							left: 30px;
+						}
+						.slick-next{
+							right: 30px;
+						}
+						.slide_contents{
+							display: inline-block;
+							background: #FFFFFF;
+							img{
+								margin: 0px 0px 20px 0px;
+							}
+							h4{
+								margin: 0px;
+							}
+							p{
+								display: block;
+								padding: 0px 20px 20px;
+								margin: 0px;
+							}
+						}
+					}
+				}
+			}
+			.view-id-civi_designer_makers{
+				.attachment{
+					background: #dadadc;
+					padding: 20px 0px 40px 0px;
+
+					h2{
+						margin: 10px 0px 30px 0px;
+					}
+				}
+				.filters_outer{
+					padding: 30px 0px;
+					h3{
+						float: left;
+						margin: 10px 50px 0px 0px;
+					}
+				}
+				.designer_list{
+					background: #dadadc;
+					padding: 40px 0px;
+
+					.views-row{
+						margin: 0px 0px 30px 0px;
+
+						.views-field-contact-id{
+							background: #FFFFFF;
+
+							.field-content{
+								display: block;
+								padding: 30px;
+
+								a{
+									color: #454a5b;
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+		footer.footer{
+			margin: 0px;
+			padding: 0px;
+
+			#block-block-1{
+				padding: 30px 0px;
+			}
+			#block-block-2{
+				padding: 30px 0px;
+				color: #FFFFFF;
+				background: #3c4242;
+			}
+		}
+	}
+}
+
+@media (max-width: 5000px) {
+    .navbar-header {
+        float: none;
+    }
+    .navbar-left,.navbar-right {
+        float: none !important;
+    }
+    .navbar-toggle {
+        display: block;
+    }
+    .navbar-collapse {
+        border-top: 1px solid transparent;
+        box-shadow: inset 0 1px 0 rgba(255,255,255,0.1);
+    }
+    .navbar-fixed-top {
+        top: 0;
+        border-width: 0 0 1px;
+    }
+    .navbar-collapse.collapse {
+        display: none!important;
+    }
+    .navbar-nav {
+        float: none!important;
+        margin-top: 7.5px;
+    }
+    .navbar-nav>li {
+        float: none;
+    }
+    .navbar-nav>li>a {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .collapse.in{
+        display:block !important;
+    }
+}

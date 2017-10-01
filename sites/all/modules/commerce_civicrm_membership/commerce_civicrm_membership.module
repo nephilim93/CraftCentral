@@ -1,0 +1,177 @@
+<?php
+
+/*
+ * Implements hook_FORM_ID_form_alter
+ */
+function commerce_civicrm_membership_form_commerce_product_product_form_alter(&$form, &$form_state){
+	// Initialize CiviCRM API
+	if (!civicrm_initialize()) {
+    	return;
+  	}
+  	// Get Membership Types
+  	$membership_types = civicrm_api3('MembershipType', 'getlist');
+
+  	// Create value Sets
+  	$membership_types_select = array('' => t('Select Type'));
+  	foreach($membership_types['values'] as $membership_type){
+  		$membership_types_select[$membership_type['id']] = $membership_type['label'];
+  	}
+  	// Check if product exists and has a membership association
+  	$record = new stdClass();
+
+  	if($form['#entity']->product_id != NULL){
+  		$query = db_select('commerce_civicrm_membership', 'ccm');
+  		$query->condition('ccm.product_id', $form['#entity']->product_id, '=');
+  		$query->range(0, 1);
+  		$query->fields('ccm');
+
+  		$result = $query->execute();
+
+  		$record = $result->fetch();
+
+  	}
+
+  	// Check if record is empty, if not, prepare the form. Else, display normal form.
+  	if(!empty($record)){
+  		 $form['civicrm_commerce_membership'] = array(
+			'#type' => 'fieldset',
+			'#title' => t('CiviCRM Membership Options'),
+			'#collapsible' => true,
+			'#collapsed' => false,
+		);
+		$form['civicrm_commerce_membership']['is_civicrm_membership'] = array(
+			'#type' => 'checkbox',
+			'#options' => t('Enable'),
+			'#title' => t('Grant membership after purchasing product?'),
+			'#value' => 1,
+		);
+		$form['civicrm_commerce_membership']['membership_values'] = array(
+			'#type' => 'select',
+			'#title' => t('Select Membership Type'),
+			'#options' => $membership_types_select,
+			'#value' => $record->membership_id,
+			'#states' => array(
+				'visible' =>  array(
+					':input[name="is_civicrm_membership"]' => array('checked' => TRUE),
+				),
+			),
+		);
+  	}else{
+  		$form['civicrm_commerce_membership'] = array(
+			'#type' => 'fieldset',
+			'#title' => t('CiviCRM Membership Options'),
+			'#collapsible' => true,
+			'#collapsed' => false,
+		);
+		$form['civicrm_commerce_membership']['is_civicrm_membership'] = array(
+			'#type' => 'checkbox',
+			'#options' => t('Enable'),
+			'#title' => t('Grant membership after purchasing product?'),
+		);
+		$form['civicrm_commerce_membership']['membership_values'] = array(
+			'#type' => 'select',
+			'#title' => t('Select Membership Type'),
+			'#options' => $membership_types_select,
+			'#states' => array(
+				'visible' =>  array(
+					':input[name="is_civicrm_membership"]' => array('checked' => TRUE),
+				),
+			),
+		);
+  	}
+
+	$form['actions']['submit']['#submit'][] = 'commerce_civicrm_membership_product_form_submit';
+
+	return $form;
+}
+
+/*
+ * Callback to process form values and create commerce product and civicrm membership on table
+ */
+function commerce_civicrm_membership_product_form_submit(&$form, &$form_state){
+	// Verify option to associate a membership with product is selected
+	if($form['civicrm_commerce_membership']['is_civicrm_membership']['#value'] == 1){
+
+		// Retrieve product id
+		$product_id = $form['#entity']->product_id;
+
+		// Retrieve membership id
+		$membership_id = $form['civicrm_commerce_membership']['membership_values']['#value'];
+
+		// Insert association in table
+		$query = db_insert('commerce_civicrm_membership')->fields(array(
+			'product_id' => $product_id,
+			'membership_id' => $membership_id
+		))->execute();
+
+	}
+}
+
+/*
+ * Implements hook_commerce_checkout_complete()
+ */
+function commerce_civicrm_membership_commerce_checkout_complete($order){
+	// Initialize CiviCRM api
+	if (!civicrm_initialize()) {
+    	return;
+  	}
+
+	// Get CiviCRM contact id
+	$cid = _commerce_civicrm_get_cid($order);
+
+	// Get line item id, then product id
+	$line_item_id = $order->commerce_line_items['und'][0]['line_item_id'];
+	$line_item = commerce_line_item_load($line_item_id);
+	$product_id = $line_item->commerce_product['und'][0]['product_id'];
+
+	// Verify if product has a membership association with it
+	$query = db_select('commerce_civicrm_membership', 'ccm');
+  	$query->condition('ccm.product_id', $product_id, '=');
+  	$query->range(0, 1);
+  	$query->fields('ccm');
+
+  	$result = $query->execute();
+
+  	$record = $result->fetch();
+
+  	if(empty($record)){
+  		return;
+  	}
+
+	// Get order total
+	$transaction_amount = $order->commerce_order_total['und'][0]['amount'] / 100;
+
+	// Get current date. TODO: Allow user to define membership duration values in the form / DB.
+	$now = getdate();
+	$membership_start_year = $now['year'];
+
+	// Format Date YYYYMMDD
+	$membership_start_month = "";
+	if($now['mon'] < 10){
+		$membership_start_month = "0".$now['mon'];
+	}else{
+		$membership_start_month = $now['mon'];
+	}
+	$membership_start_day = "";
+	if($now['mday'] < 10){
+		$membership_start_day = "0".$now['mday'];
+	}else{
+		$membership_start_day = $now['mday'];
+	}
+	$membership_start_date = $membership_start_year.$membership_start_month.$membership_start_day;
+
+	// Create Membership
+	$result_mem = civicrm_api3('Membership', 'create', array(
+		'membership_type_id' => $record->membership_id,
+		'contact_id' => $cid,
+		'start_date' => $membership_start_date,
+	));
+
+	// Register Contribution
+	$result = civicrm_api3('Contribution', 'create', array(
+  		'financial_type_id' => "Member Dues",
+  		'total_amount' => $transaction_amount,
+  		'contact_id' => $cid,
+	));
+
+}
