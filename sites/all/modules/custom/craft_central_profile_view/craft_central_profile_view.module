@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Craft Central Profile View feature.
+ */
+
+include_once 'craft_central_profile_view.features.inc';

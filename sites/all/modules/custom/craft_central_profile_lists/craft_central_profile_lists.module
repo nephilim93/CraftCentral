@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Craft Central Profile Lists feature.
+ */
+
+include_once 'craft_central_profile_lists.features.inc';
