@@ -72,7 +72,7 @@ if (!defined('CIVICRM_UF')) {
  *      define( 'CIVICRM_UF_DSN', 'mysql://cms_db_username:cms_db_password@db_server/cms_database?new_link=true');
  */
 if (!defined('CIVICRM_UF_DSN') && CIVICRM_UF !== 'UnitTests') {
-  define( 'CIVICRM_UF_DSN'           , 'mysql://cc_drupal:.cc_drup4l.@localhost/cc_drupal?new_link=true');
+  define( 'CIVICRM_UF_DSN'           , 'mysql://cc_drupal:.cc_drup4l.@compucorpdemo.clbtxplynal9.us-east-2.rds.amazonaws.com/cc_drupal?new_link=true');
 }
 
 /**
@@ -103,7 +103,7 @@ if (!defined('CIVICRM_DSN')) {
     define('CIVICRM_DSN', $GLOBALS['_CV']['TEST_DB_DSN']);
   }
   else {
-    define('CIVICRM_DSN', 'mysql://cc_civi:.cc_c1v1.@localhost:3306/cc_civi?new_link=true');
+    define('CIVICRM_DSN', 'mysql://cc_civi:.cc_c1v1.@compucorpdemo.clbtxplynal9.us-east-2.rds.amazonaws.com:3306/cc_civi?new_link=true');
   }
 }
 
@@ -175,9 +175,9 @@ if (!defined('CIVICRM_LOGGING_DSN')) {
 
 global $civicrm_root;
 
-$civicrm_root = '/usr/local/var/www/vhosts/_localhost/cc_drupal/sites/all/modules/civicrm';
+$civicrm_root = '/var/www/html/sites/all/modules/civicrm';
 if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
-  define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/usr/local/var/www/vhosts/_localhost/cc_drupal/sites/default/files/civicrm/templates_c/');
+  define( 'CIVICRM_TEMPLATE_COMPILEDIR', '/var/www/html/sites/default/files/civicrm/templates_c/');
 }
 
 /**
@@ -213,7 +213,7 @@ if (!defined('CIVICRM_TEMPLATE_COMPILEDIR')) {
  *
  */
 if (!defined('CIVICRM_UF_BASEURL')) {
-  define( 'CIVICRM_UF_BASEURL'      , 'http://cc-drupal.apache.localhost/');
+  define( 'CIVICRM_UF_BASEURL'      , 'http://ec2-18-221-200-56.us-east-2.compute.amazonaws.com//');
 }
 
 /**

@@ -93,7 +93,7 @@
               <i class="fa fa-bars" aria-hidden="true"></i>
             </button>
             <div class="user_menu pull-left">
-              <a href="#"><i class="fa fa-user-circle-o" aria-hidden="true"></i></a>
+              <a href="#"><i class="fa fa-user" aria-hidden="true"></i></a>
             </div>
             <div class="search_form_container pull-left">
               <?php if (!empty($page['navigation'])): ?>
